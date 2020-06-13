@@ -42,9 +42,10 @@ class Movie extends StatefulWidget {
         builder: (context,  AsyncSnapshot< Response<Movies>>  snapshot){
           if(snapshot.hasData){
             return buildList(snapshot.data.body);
-          }else{
-            return CircularProgressIndicator();
+          }else if(snapshot.hasError) {
+            return Text(snapshot.error.toString());
           }
+          return Center(child: CircularProgressIndicator());
         },
       ),
 
@@ -56,22 +57,25 @@ class Movie extends StatefulWidget {
 
 
   Widget buildList(Movies snapshot) {
-    return GridView.builder(
-        itemCount: snapshot.results.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (BuildContext context, int index) {
-          return GridTile(
-            child: InkResponse(
-              enableFeedback: true,
-              child: Image.network(
-                'https://image.tmdb.org/t/p/w185${snapshot
-                    .results[index].poster_path}',
-                fit: BoxFit.cover,
+    return Padding(
+      padding: EdgeInsets.only(left: 4,right: 4,top: 4,),
+      child:  GridView.builder(
+          itemCount: snapshot.results.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemBuilder: (BuildContext context, int index) {
+            return GridTile(
+              child: InkResponse(
+                enableFeedback: true,
+                child: Image.network(
+                  'https://image.tmdb.org/t/p/w185${snapshot
+                      .results[index].poster_path}',
+                  fit: BoxFit.cover,
+                ),
+                //  onTap: () => openDetailPage(snapshot.data, index),
               ),
-            //  onTap: () => openDetailPage(snapshot.data, index),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 
 
