@@ -13,8 +13,9 @@ class Results {
     String title;
     bool video;
     int vote_count;
+    String vote_average;
 
-    Results({this.adult, this.backdrop_path, this.genre_ids, this.id, this.original_language, this.original_title, this.overview, this.popularity, this.poster_path, this.release_date, this.title, this.video, this.vote_count});
+    Results({this.adult, this.backdrop_path, this.genre_ids, this.id, this.original_language, this.original_title, this.overview, this.popularity, this.poster_path, this.release_date, this.title, this.video, this.vote_count,this.vote_average });
 
     factory Results.fromJson(Map<String, dynamic> json) {
         return Results(
@@ -31,6 +32,7 @@ class Results {
             title: json['title'], 
             video: json['video'], 
             vote_count: json['vote_count'],
+            vote_average :json['vote_average '],
         );
     }
 
@@ -48,6 +50,7 @@ class Results {
         data['title'] = this.title;
         data['video'] = this.video;
         data['vote_count'] = this.vote_count;
+        data['vote_average'] = this.vote_average;
         if (this.genre_ids != null) {
             data['genre_ids'] = this.genre_ids;
         }

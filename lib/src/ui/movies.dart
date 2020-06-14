@@ -6,6 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterblocmovies/src/bloc/movies_bloc.dart';
 import 'package:flutterblocmovies/src/model/movies.dart';
+import 'package:flutterblocmovies/src/utils/url_constant.dart';
+
+import 'movie_detail.dart';
 
 class Movie extends StatefulWidget {
   @override
@@ -57,26 +60,49 @@ class Movie extends StatefulWidget {
 
 
   Widget buildList(Movies snapshot) {
-    return Padding(
-      padding: EdgeInsets.only(left: 4,right: 4,top: 4,),
-      child:  GridView.builder(
-          itemCount: snapshot.results.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (BuildContext context, int index) {
-            return GridTile(
-              child: InkResponse(
-                enableFeedback: true,
-                child: Image.network(
-                  'https://image.tmdb.org/t/p/w185${snapshot
-                      .results[index].poster_path}',
-                  fit: BoxFit.cover,
+    return Hero(
+      tag: 'dhddj',
+      child: Padding(
+        padding: EdgeInsets.only(left: 4,right: 4,top: 4,),
+        child:  GridView.builder(
+            itemCount: snapshot.results.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemBuilder: (BuildContext context, int index) {
+              return GridTile(
+                child: InkResponse(
+                  enableFeedback: true,
+                  child:  Image.network(
+                    'https://image.tmdb.org/t/p/w185${snapshot
+                        .results[index].poster_path}',
+                    fit: BoxFit.cover,
+                  ),
+
+
+                  onTap: () => openDetailPage(snapshot, index),
                 ),
-                //  onTap: () => openDetailPage(snapshot.data, index),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
+
+
+
+    openDetailPage(Movies data, int index) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return MovieDetail(
+            title: data.results[index].title,
+            posterUrl: data.results[index].backdrop_path,
+            description: data.results[index].overview,
+            releaseDate: data.results[index].release_date,
+            voteAverage: data.results[index].vote_average.toString(),
+            movieId: data.results[index].id,
+          );
+        }),
+      );
+    }
 
 
   }
