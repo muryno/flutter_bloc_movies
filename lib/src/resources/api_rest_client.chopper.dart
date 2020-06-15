@@ -20,4 +20,11 @@ class _$ApiRestClient extends ApiRestClient {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<Movies, Movies>($request);
   }
+
+  Future<Response<Trailer>> getTrailer(String id) {
+    final $url =
+        'http://api.themoviedb.org/3/movie/${id}/videos?api_key=bc682e0f689f1086b5637a08c4357d9c';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<Trailer, Trailer>($request);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutterblocmovies/src/model/movies.dart';
+import 'package:flutterblocmovies/src/model/movies/Trailer.dart';
 import 'package:flutterblocmovies/src/utils/url_constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show MultipartFile;
@@ -18,6 +19,10 @@ abstract class ApiRestClient extends ChopperService  {
   @Get(path: "/popular?api_key=${UrlConstant.API_KEY}")
   Future<Response<Movies>> getMovies();
 
+
+
+  @Get(path: "/{id}/videos?api_key=${UrlConstant.API_KEY}")
+  Future<Response<Trailer>> getTrailer(@Path('id') String id);
 
 
 

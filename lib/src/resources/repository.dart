@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutterblocmovies/src/model/movies.dart';
+import 'package:flutterblocmovies/src/model/movies/Trailer.dart';
 import 'package:flutterblocmovies/src/resources/retrofit_client.dart';
 
 class Repository {
@@ -9,5 +10,5 @@ class Repository {
 
   Future<Response<Movies>> fetchAllMovies() => moviesApiProvider.getDataService().getMovies();
 
-  //Future<TrailerModel> fetchTrailers(int movieId) => moviesApiProvider.fetchTrailer(movieId);
+  Future<Response<Trailer>> fetchTrailers(String movieId) => moviesApiProvider.getDataService().getTrailer(movieId);
 }

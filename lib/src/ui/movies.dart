@@ -5,6 +5,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterblocmovies/src/bloc/movies_bloc.dart';
+import 'package:flutterblocmovies/src/bloc/movies_details_inherited_widget_provider.dart';
 import 'package:flutterblocmovies/src/model/movies.dart';
 import 'package:flutterblocmovies/src/utils/url_constant.dart';
 
@@ -89,17 +90,21 @@ class Movie extends StatefulWidget {
 
 
     openDetailPage(Movies data, int index) {
+
+      final page = MovieDetailBlocProvider(
+        child:  MovieDetail(
+          title: data.results[index].title,
+          posterUrl: data.results[index].backdrop_path,
+          description: data.results[index].overview,
+          releaseDate: data.results[index].release_date,
+          voteAverage: data.results[index].vote_average.toString(),
+          movieId: data.results[index].id,
+        ),
+      );
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) {
-          return MovieDetail(
-            title: data.results[index].title,
-            posterUrl: data.results[index].backdrop_path,
-            description: data.results[index].overview,
-            releaseDate: data.results[index].release_date,
-            voteAverage: data.results[index].vote_average.toString(),
-            movieId: data.results[index].id,
-          );
+          return page;
         }),
       );
     }
